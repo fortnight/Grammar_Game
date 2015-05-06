@@ -13,17 +13,17 @@ from sugar3.activity.widgets import StopButton
 
 import sugargame.canvas
 
-import HFOSS
+import Grammar_Game
 
 
-class HFOSSActivity(sugar3.activity.activity.Activity):
+class Grammar_GameActivity(sugar3.activity.activity.Activity):
     def __init__(self, handle):
-        super(HFOSSActivity, self).__init__(handle)
+        super(Grammar_GameActivity, self).__init__(handle)
 
         self.paused = False
 
         # Create the game instance.
-        self.game = HFOSS.HFOSS()
+        self.game = Grammar_Game.Grammar_Game()
 
         # Build the activity toolbar.
         self.build_toolbar()

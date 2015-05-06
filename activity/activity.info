@@ -1,6 +1,6 @@
 [Activity]
 name = Grammar_Game
-bundle_id = edu.rit.HFOSS
-exec = sugar-activity HFOSSActivity.HFOSSActivity
+bundle_id = edu.rit.Grammar_Game
+exec = sugar-activity Grammar_GameActivity.Grammar_GameActivity
 icon = activity-generic
 activity_version = 1
