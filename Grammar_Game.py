@@ -61,7 +61,7 @@ class Grammar_Game:
         screen.fill((255, 255, 255))  # 255 for white
         Game = pygame.draw.rect(screen, (0, 255, 0), (000, 300, 1400, 100))
         HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
-        TrophyCase = pygame.draw.rect(screen, (255, 100, 100), (000, 500, 1400, 100))
+        TrophyCase = pygame.draw.rect(screen, (255, 255, 0), (000, 500, 1400, 100))
         Quit = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
         bttnA = MenuButton(Game.x, Game.y, Game, Game.width, Game.height, "GAMES")
         bttnB = MenuButton(HowToPlay.x, HowToPlay.y, HowToPlay, HowToPlay.width, HowToPlay.height, "HTP")
@@ -71,6 +71,7 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnB)
         self.add_to_ButtonList(bttnC)
         self.add_to_ButtonList(bttnD)
+        self.Title_Text(screen, "Main Menu")
 
     def Trophy_Case(self, screen):
         self.flush_ButtonList()
@@ -78,6 +79,7 @@ class Grammar_Game:
         quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
+        self.Title_Text(screen, "Trophy Case")
 
     def How_To_Play(self, screen):
         self.flush_ButtonList()
@@ -85,6 +87,13 @@ class Grammar_Game:
         quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
+        self.Title_Text(screen, "How To Play")
+    
+    # Load text somewhat in the upper middle of the screen
+    def Title_Text(self, screen, text):
+        Font = pygame.font.SysFont("monospace", 64)
+        Title = Font.render(text, False, (0, 0, 0))
+        screen.blit(Title, (400, 200))
 
     def set_paused(self, paused):
         self.paused = paused
