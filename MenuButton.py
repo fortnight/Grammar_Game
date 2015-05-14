@@ -3,11 +3,12 @@ import pygame
 from gi.repository import Gtk
 
 class Buttons:
-    def __init__(self, x, y, rect, w, h):
+    def __init__(self, x, y, rect, w, h, screen):
         self.x = x
         self.y = y
         self.rect = rect
         self.size = (w, h)
+        self.screen = screen
 
     # Method to see if the current positon is on a button
     def onButtons(self, pos):
