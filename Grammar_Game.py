@@ -18,6 +18,8 @@ class Grammar_Game:
         self.vx = 10
         self.vy = 0
 
+        self.space_height = 300
+        self.space_width = 1400
         self.paused = True
         self.direction = 1
         self.bttnTestRect = pygame.Rect(self.x, self.y, 200, 100)
@@ -55,6 +57,7 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnC)
         self.add_to_ButtonList(bttnD)
         self.add_to_ButtonList(bttnQuit)
+        self.Button_Text(screen, "Quit", bttnQuit)
 
     def Main_Menu(self, screen):
         self.flush_ButtonList()
@@ -63,15 +66,22 @@ class Grammar_Game:
         HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
         TrophyCase = pygame.draw.rect(screen, (255, 255, 0), (000, 500, 1400, 100))
         Quit = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
+        NinjaBear = pygame.draw.rect(screen, (255, 255, 255), (1300, 000, 100, 100))
         bttnA = MenuButton(Game.x, Game.y, Game, Game.width, Game.height, "GAMES")
         bttnB = MenuButton(HowToPlay.x, HowToPlay.y, HowToPlay, HowToPlay.width, HowToPlay.height, "HTP")
         bttnC = MenuButton(TrophyCase.x, TrophyCase.y, TrophyCase, TrophyCase.width, TrophyCase.height, "TC")
         bttnD = MenuButton(Quit.x, Quit.y, Quit, Quit.width, Quit.height, "RECTIFY")
+        bttnE = MenuButton(NinjaBear.x, NinjaBear.y, NinjaBear, NinjaBear.width, NinjaBear.height, "NB")
         self.add_to_ButtonList(bttnA)
         self.add_to_ButtonList(bttnB)
         self.add_to_ButtonList(bttnC)
         self.add_to_ButtonList(bttnD)
+        self.add_to_ButtonList(bttnE)
         self.Title_Text(screen, "Main Menu")
+        self.Button_Text(screen, "Games", bttnA)
+        self.Button_Text(screen, "How To Play", bttnB)
+        self.Button_Text(screen, "Trophy Case", bttnC)
+        self.Button_Text(screen, "Exit", bttnD)
 
     def Trophy_Case(self, screen):
         self.flush_ButtonList()
@@ -80,6 +90,7 @@ class Grammar_Game:
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
         self.Title_Text(screen, "Trophy Case")
+        self.Button_Text(screen, "Quit", bttnQuit)
 
     def How_To_Play(self, screen):
         self.flush_ButtonList()
@@ -88,12 +99,35 @@ class Grammar_Game:
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
         self.Title_Text(screen, "How To Play")
+        self.Button_Text(screen, "Quit", bttnQuit)
+
+    def Ninja_Bear(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255)) # 255 for white
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        self.add_to_ButtonList(bttnQuit)
+        NB = pygame.image.load(file('Ninja-bear.png'))
+        center_x = (1400-159)/2
+        center_y = (400-228)/2
+        screen.blit(NB, (center_x, center_y + 300))
+        self.Title_Text(screen, "Ninja Bear")
+        self.Button_Text(screen, "Quit", bttnQuit)
     
     # Load text somewhat in the upper middle of the screen
     def Title_Text(self, screen, text):
         Font = pygame.font.SysFont("monospace", 64)
         Title = Font.render(text, False, (0, 0, 0))
-        screen.blit(Title, (400, 200))
+        center_x = (self.space_width - Title.get_rect().width)/2
+        center_y = (self.space_height - Title.get_rect().height)/2
+        screen.blit(Title, (center_x, center_y))
+
+    def Button_Text(self, screen, text, button):
+        Font = pygame.font.SysFont("monospace", 40)
+        Title = Font.render(text, False, (0, 0, 0))
+        center_x = (button.size[0] - Title.get_rect().width)/2
+        center_y = (button.size[1] - Title.get_rect().height)/2
+        screen.blit(Title, (button.x + center_x, button.y + center_y))
 
     def set_paused(self, paused):
         self.paused = paused
@@ -122,6 +156,8 @@ class Grammar_Game:
             self.How_To_Play(screen)
         if self.window == "TC":
             self.Trophy_Case(screen)
+        if self.window == "NB":
+            self.Ninja_Bear(screen)
         if self.window == "RECTIFY":
             sys.exit()
 
