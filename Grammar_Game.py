@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 import pygame
 from Buttons import Buttons
 from GameButton import GameButton
@@ -22,19 +23,19 @@ class Grammar_Game:
         self.bttnTestRect = pygame.Rect(self.x, self.y, 200, 100)
         self.bttnTest = Buttons(self.bttnTestRect.x, self.bttnTestRect.y, self.bttnTestRect, 200, 100)
         self.bttnlist = []
-        self.screen = None
+        self.window = "MainMenu"
 
     def set_ButtonList(self, bttnList):
         self.bttnlist = bttnList
 
     def add_to_ButtonList(self, button):
         if self.bttnlist == []:
-            self.bttnlist = button, None
+            self.bttnlist = [button]
         elif self.bttnlist != []:
             self.bttnlist.append(button)
 
     def flush_ButtonList(self):
-        self.bttnlist = [None]
+        self.bttnlist = []
 
     def Game_Screen(self, screen):
         self.flush_ButtonList()
@@ -55,6 +56,36 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnD)
         self.add_to_ButtonList(bttnQuit)
 
+    def Main_Menu(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255))  # 255 for white
+        Game = pygame.draw.rect(screen, (0, 255, 0), (000, 300, 1400, 100))
+        HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
+        TrophyCase = pygame.draw.rect(screen, (255, 100, 100), (000, 500, 1400, 100))
+        Quit = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
+        bttnA = MenuButton(Game.x, Game.y, Game, Game.width, Game.height, "GAMES")
+        bttnB = MenuButton(HowToPlay.x, HowToPlay.y, HowToPlay, HowToPlay.width, HowToPlay.height, "HTP")
+        bttnC = MenuButton(TrophyCase.x, TrophyCase.y, TrophyCase, TrophyCase.width, TrophyCase.height, "TC")
+        bttnD = MenuButton(Quit.x, Quit.y, Quit, Quit.width, Quit.height, "RECTIFY")
+        self.add_to_ButtonList(bttnA)
+        self.add_to_ButtonList(bttnB)
+        self.add_to_ButtonList(bttnC)
+        self.add_to_ButtonList(bttnD)
+
+    def Trophy_Case(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255)) # 255 for white
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        self.add_to_ButtonList(bttnQuit)
+
+    def How_To_Play(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255)) # 255 for white
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        self.add_to_ButtonList(bttnQuit)
+
     def set_paused(self, paused):
         self.paused = paused
 
@@ -73,9 +104,17 @@ class Grammar_Game:
     def read_file(self, file_path):
         pass
     
-    def SetScreen(self, window):
-        if window == "MainMenu":
-            pygame.quit()
+    def Set_Screen(self, screen):
+        if self.window == "MainMenu":
+            self.Main_Menu(screen)
+        if self.window == "GAMES":
+            self.Game_Screen(screen)
+        if self.window == "HTP":
+            self.How_To_Play(screen)
+        if self.window == "TC":
+            self.Trophy_Case(screen)
+        if self.window == "RECTIFY":
+            sys.exit()
 
     def GameAnswer(self, answer):
         pass
@@ -98,11 +137,15 @@ class Grammar_Game:
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                        result = self.bttnTest.EVENT_CLICK()
-                        if result[0]:
-                            self.SetScreen(result[1])
-                        elif result[0] == False:
-                            self.GameAnswer(result[1])
+                       #print(self.bttnlist)
+                        for bttn in self.bttnlist:
+                            result = bttn.EVENT_CLICK()
+                            if result != False:
+                                if result[0]:
+                                    self.window = result[1]
+                                elif result[0] == False:
+                                    self.window = "GAMES"
+                                    self.GameAnswer(result[1])
 
             # Move the ball
 #           if not self.paused:
@@ -121,7 +164,7 @@ class Grammar_Game:
 
             # Clear Display
             screen.fill((255, 255, 255))  # 255 for white
-            self.Game_Screen(screen)
+            self.Set_Screen(screen)
 
             #draw a rectangle
            #pygame.draw.rect(screen, (255, 0, 0), (000, 300, 1400, 100))

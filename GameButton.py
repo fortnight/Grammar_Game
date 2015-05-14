@@ -19,7 +19,7 @@ class GameButton:
             self.y + self.size[1] > y
             ):
             return pos
-        else: return None
+        else: return False
 
     @staticmethod
     def helperRaiseEvent(events):
@@ -44,6 +44,8 @@ class GameButton:
             # only call one event at any click (no button overlap)
             return False, self.answer #self.EVENT_TEST_BUTTON()
                 #break                       
+        elif self.onButtons(mouseAt) == False:
+            return False
 
    # def EVENT_TEST_BUTTON(self):
    #     screen = pygame.display.get_surface()

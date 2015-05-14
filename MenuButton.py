@@ -19,7 +19,7 @@ class MenuButton:
             self.y + self.size[1] > y
             ):
             return pos
-        else: return None
+        else: return False
 
     @staticmethod
     def helperRaiseEvent(events):
@@ -43,7 +43,9 @@ class MenuButton:
             #self.helperRaiseEvent(event)
             # only call one event at any click (no button overlap)
             return True, self.screen #self.EVENT_TEST_BUTTON()
-                #break                       
+                #break
+        elif self.onButtons(mouseAt) == False:
+            return False
 
    # def EVENT_TEST_BUTTON(self):
    #     screen = pygame.display.get_surface()
