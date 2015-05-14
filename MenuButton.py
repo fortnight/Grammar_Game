@@ -2,7 +2,7 @@
 import pygame
 from gi.repository import Gtk
 
-class Buttons:
+class MenuButton:
     def __init__(self, x, y, rect, w, h, screen):
         self.x = x
         self.y = y
@@ -42,7 +42,7 @@ class Buttons:
             # call the event in that place of the array
             #self.helperRaiseEvent(event)
             # only call one event at any click (no button overlap)
-            return True #self.EVENT_TEST_BUTTON()
+            return True, self.screen #self.EVENT_TEST_BUTTON()
                 #break                       
 
    # def EVENT_TEST_BUTTON(self):

@@ -2,12 +2,13 @@
 import pygame
 from gi.repository import Gtk
 
-class Buttons:
-    def __init__(self, x, y, rect, w, h):
+class GameButton:
+    def __init__(self, x, y, rect, w, h, answer):
         self.x = x
         self.y = y
         self.rect = rect
         self.size = (w, h)
+        self.answer = answer
 
     # Method to see if the current positon is on a button
     def onButtons(self, pos):
@@ -41,7 +42,7 @@ class Buttons:
             # call the event in that place of the array
             #self.helperRaiseEvent(event)
             # only call one event at any click (no button overlap)
-            return True #self.EVENT_TEST_BUTTON()
+            return False, self.answer #self.EVENT_TEST_BUTTON()
                 #break                       
 
    # def EVENT_TEST_BUTTON(self):

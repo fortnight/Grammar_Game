@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import pygame
 from Buttons import Buttons
+from GameButton import GameButton
+from MenuButton import MenuButton
 from gi.repository import Gtk
 
 
@@ -19,6 +21,39 @@ class Grammar_Game:
         self.direction = 1
         self.bttnTestRect = pygame.Rect(self.x, self.y, 200, 100)
         self.bttnTest = Buttons(self.bttnTestRect.x, self.bttnTestRect.y, self.bttnTestRect, 200, 100)
+        self.bttnlist = []
+        self.screen = None
+
+    def set_ButtonList(self, bttnList):
+        self.bttnlist = bttnList
+
+    def add_to_ButtonList(self, button):
+        if self.bttnlist == []:
+            self.bttnlist = button, None
+        elif self.bttnlist != []:
+            self.bttnlist.append(button)
+
+    def flush_ButtonList(self):
+        self.bttnlist = [None]
+
+    def Game_Screen(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255))  # 255 for white
+        answer_A = pygame.draw.rect(screen, (255, 0, 0), (000, 300, 1400, 100))
+        answer_B = pygame.draw.rect(screen, (0, 255, 0), (000, 400, 1400, 100))
+        answer_C = pygame.draw.rect(screen, (255, 0, 0), (000, 500, 1400, 100))
+        answer_D = pygame.draw.rect(screen, (0, 255, 0), (000, 600, 1400, 100))
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        bttnA = GameButton(answer_A.x, answer_A.y, answer_A, answer_A.width, answer_A.height, True)
+        bttnB = GameButton(answer_B.x, answer_B.y, answer_B, answer_B.width, answer_B.height, False)
+        bttnC = GameButton(answer_C.x, answer_C.y, answer_C, answer_C.width, answer_C.height, False)
+        bttnD = GameButton(answer_D.x, answer_D.y, answer_D, answer_D.width, answer_D.height, False)
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        self.add_to_ButtonList(bttnA)
+        self.add_to_ButtonList(bttnB)
+        self.add_to_ButtonList(bttnC)
+        self.add_to_ButtonList(bttnD)
+        self.add_to_ButtonList(bttnQuit)
 
     def set_paused(self, paused):
         self.paused = paused
@@ -36,6 +71,13 @@ class Grammar_Game:
 
     # Called to load the state of the game from the Journal.
     def read_file(self, file_path):
+        pass
+    
+    def SetScreen(self, window):
+        if window == "MainMenu":
+            pygame.quit()
+
+    def GameAnswer(self, answer):
         pass
 
     # The main game loop.
@@ -56,34 +98,34 @@ class Grammar_Game:
                 elif event.type == pygame.VIDEORESIZE:
                     pygame.display.set_mode(event.size, pygame.RESIZABLE)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                        if self.bttnTest.EVENT_CLICK():
-                            self.EVENT_TEST_BUTTON()
+                        result = self.bttnTest.EVENT_CLICK()
+                        if result[0]:
+                            self.SetScreen(result[1])
+                        elif result[0] == False:
+                            self.GameAnswer(result[1])
 
             # Move the ball
-            if not self.paused:
-                self.x += self.vx * self.direction
-                if self.direction == 1 and self.x > screen.get_width() + 100:
-                    self.x = -100
-                elif self.direction == -1 and self.x < -100:
-                    self.x = screen.get_width() + 100
-
-                self.y += self.vy
-                if self.y > screen.get_height() - 100:
-                    self.y = screen.get_height() - 100
-                    self.vy = -self.vy
-
-                self.vy += 5
+#           if not self.paused:
+#               self.x += self.vx * self.direction
+#               if self.direction == 1 and self.x > screen.get_width() + 100:
+#                   self.x = -100
+#               elif self.direction == -1 and self.x < -100:
+#                   self.x = screen.get_width() + 100
+#
+#               self.y += self.vy
+#               if self.y > screen.get_height() - 100:
+#                   self.y = screen.get_height() - 100
+#                   self.vy = -self.vy
+#
+#               self.vy += 5
 
             # Clear Display
             screen.fill((255, 255, 255))  # 255 for white
-
+            self.Game_Screen(screen)
 
             #draw a rectangle
-            pygame.draw.rect(screen, (255, 0, 0), (000, 300, 1400, 100))
-            pygame.draw.rect(screen, (0, 255, 0), (000, 400, 1400, 100))
-            pygame.draw.rect(screen, (255, 0, 0), (000, 500, 1400, 100))
-            pygame.draw.rect(screen, (0, 255, 0), (000, 600, 1400, 100))
-            
+           #pygame.draw.rect(screen, (255, 0, 0), (000, 300, 1400, 100))
+                        
             # Draw the ball
             #pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 100)
 
@@ -95,7 +137,6 @@ class Grammar_Game:
 
 #    def EVENT_CLICK():
 #        pass
-
 
 # This function is called when the game is run directly from the command line:
 # ./TestGame.py
