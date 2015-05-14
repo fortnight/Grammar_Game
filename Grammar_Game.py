@@ -18,6 +18,8 @@ class Grammar_Game:
         self.vx = 10
         self.vy = 0
 
+        self.cur_game = None
+        self.cur_question = 'Question1'
         self.space_height = 300
         self.space_width = 1400
         self.paused = True
@@ -39,6 +41,17 @@ class Grammar_Game:
     def flush_ButtonList(self):
         self.bttnlist = []
 
+    def Game_question(self, screen, gamefile):
+        if gamefile.name[8:-1] == "Trophy":
+            print("wop")
+            self.cur_question = 'Question1'
+        self.Title_Text(screen, gamefile.readline()[:-1])
+        self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[0])
+        self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[1])
+        self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[2])
+        self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[3])
+        #self.curline += 5
+
     def Game_Screen(self, screen):
         self.flush_ButtonList()
         screen.fill((255, 255, 255))  # 255 for white
@@ -58,6 +71,32 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnD)
         self.add_to_ButtonList(bttnQuit)
         self.Button_Text(screen, "Quit", bttnQuit)
+        gamefile = file(self.cur_game + '/' + self.cur_question + '.txt')
+        self.Game_question(screen, gamefile)
+
+    def Game_Menu(self, screen):
+        self.flush_ButtonList()
+        screen.fill((255, 255, 255))  # 255 for white
+        RP = pygame.draw.rect(screen, (0, 255, 0), (000, 300, 1400, 100))
+        SP  = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
+        WW = pygame.draw.rect(screen, (255, 255, 0), (000, 500, 1400, 100))
+        GF = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        bttnA = MenuButton(RP.x, RP.y, RP, RP.width, RP.height, "GAME_RP")
+        bttnB = MenuButton(SP.x, SP.y, SP, SP.width, SP.height, "GAME_SP")
+        bttnC = MenuButton(WW.x, WW.y, WW, WW.width, WW.height, "GAME_WW")
+        bttnD = MenuButton(GF.x, GF.y, GF, GF.width, GF.height, "GAME_GF")
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        self.add_to_ButtonList(bttnA)
+        self.add_to_ButtonList(bttnB)
+        self.add_to_ButtonList(bttnC)
+        self.add_to_ButtonList(bttnD)
+        self.add_to_ButtonList(bttnQuit)
+       #self.Title_Text(screen, "Main Menu")
+       #self.Button_Text(screen, "Games", bttnA)
+       #self.Button_Text(screen, "How To Play", bttnB)
+       #self.Button_Text(screen, "Trophy Case", bttnC)
+       #self.Button_Text(screen, "Exit", bttnD)
 
     def Main_Menu(self, screen):
         self.flush_ButtonList()
@@ -151,18 +190,44 @@ class Grammar_Game:
         if self.window == "MainMenu":
             self.Main_Menu(screen)
         if self.window == "GAMES":
-            self.Game_Screen(screen)
+            self.Game_Menu(screen)
         if self.window == "HTP":
             self.How_To_Play(screen)
         if self.window == "TC":
             self.Trophy_Case(screen)
         if self.window == "NB":
             self.Ninja_Bear(screen)
+        if self.window == "GAME_RP":
+            self.cur_game = 'games/RP'
+            self.Game_Screen(screen)
+        if self.window == "GAME_SP":
+            self.cur_game = 'games/SP'
+            self.Game_Screen(screen)
+        if self.window == "GAME_WW":
+            self.cur_game = 'games/WW'
+            self.Game_Screen(screen)
+        if self.window == "GAME_GF":
+            self.cur_game = 'games/GF'
+            self.Game_Screen(screen)
         if self.window == "RECTIFY":
             sys.exit()
 
-    def GameAnswer(self, answer):
-        pass
+    def Next_Question(self):
+        if self.cur_question == 'Question5':
+            self.cur_question = 'Trophy'
+        if self.cur_question == 'Question4':
+            self.cur_question = 'Question5'
+        if self.cur_question == 'Question3':
+            self.cur_question = 'Question4'
+        if self.cur_question == 'Question2':
+            self.cur_question = 'Question3'
+        if self.cur_question == 'Question1':
+            self.cur_question = 'Question2'
+
+
+    def GameAnswer(self, screen, answer):
+        if answer:
+            self.Next_Question()
 
     # The main game loop.
     def run(self):
@@ -189,8 +254,7 @@ class Grammar_Game:
                                 if result[0]:
                                     self.window = result[1]
                                 elif result[0] == False:
-                                    self.window = "GAMES"
-                                    self.GameAnswer(result[1])
+                                    self.GameAnswer(screen, result[1])
 
             # Move the ball
 #           if not self.paused:
