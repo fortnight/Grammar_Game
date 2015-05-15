@@ -27,7 +27,20 @@ class Grammar_Game:
         self.bttnTestRect = pygame.Rect(self.x, self.y, 200, 100)
         self.bttnTest = Buttons(self.bttnTestRect.x, self.bttnTestRect.y, self.bttnTestRect, 200, 100)
         self.bttnlist = []
+        self.trophyList = []
         self.window = "MainMenu"
+
+    def set_TrophyList(self, bttnList):
+        self.trophyList = bttnList
+
+    def add_to_TrophyList(self, button):
+        if self.trophyList == []:
+            self.trophyList = [button]
+        elif self.trophyList != []:
+            self.trophyList.append(button)
+
+    def flush_TrophyList(self):
+        self.trophyList = []
 
     def set_ButtonList(self, bttnList):
         self.bttnlist = bttnList
@@ -42,9 +55,6 @@ class Grammar_Game:
         self.bttnlist = []
 
     def Game_question(self, screen, gamefile):
-        if gamefile.name[8:-1] == "Trophy":
-            print("wop")
-            self.cur_question = 'Question1'
         self.Title_Text(screen, gamefile.readline()[:-1])
         self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[0])
         self.Button_Text(screen, gamefile.readline()[:-1], self.bttnlist[1])
@@ -53,6 +63,8 @@ class Grammar_Game:
         #self.curline += 5
 
     def Game_Screen(self, screen):
+        if self.cur_question == 'Trophy':
+            self.add_to_TrophyList(self.cur_game)
         self.flush_ButtonList()
         screen.fill((255, 255, 255))  # 255 for white
         answer_A = pygame.draw.rect(screen, (255, 0, 0), (000, 300, 1400, 100))
@@ -130,6 +142,8 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnQuit)
         self.Title_Text(screen, "Trophy Case")
         self.Button_Text(screen, "Quit", bttnQuit)
+        for trophy in self.trophyList:
+            print(trophy)
 
     def How_To_Play(self, screen):
         self.flush_ButtonList()
@@ -188,6 +202,7 @@ class Grammar_Game:
     
     def Set_Screen(self, screen):
         if self.window == "MainMenu":
+            self.cur_question = 'Question1'
             self.Main_Menu(screen)
         if self.window == "GAMES":
             self.Game_Menu(screen)
