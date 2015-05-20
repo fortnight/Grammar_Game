@@ -89,21 +89,20 @@ class Grammar_Game:
     def Game_Menu(self, screen):
         self.flush_ButtonList()
         screen.fill((255, 255, 255))  # 255 for white
-        RP = pygame.draw.rect(screen, (0, 255, 0), (000, 300, 1400, 100))
-        SP  = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
-        WW = pygame.draw.rect(screen, (255, 255, 0), (000, 500, 1400, 100))
-        GF = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
-        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
+        RP = pygame.draw.rect(screen, (0, 255, 0), (565, 290, 463, 111))
+        PP  = pygame.draw.rect(screen, (255, 0, 0), (565, 416, 463, 111))
+        CS = pygame.draw.rect(screen, (255, 255, 0), (565, 542, 463, 111))
+        quit_rect = pygame.draw.rect(screen, (0, 0, 255), (535, 668, 463, 111))
         bttnA = MenuButton(RP.x, RP.y, RP, RP.width, RP.height, "GAME_RP")
-        bttnB = MenuButton(SP.x, SP.y, SP, SP.width, SP.height, "GAME_SP")
-        bttnC = MenuButton(WW.x, WW.y, WW, WW.width, WW.height, "GAME_WW")
-        bttnD = MenuButton(GF.x, GF.y, GF, GF.width, GF.height, "GAME_GF")
-        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        bttnB = MenuButton(PP.x, PP.y, PP, PP.width, PP.height, "GAME_PP")
+        bttnC = MenuButton(CS.x, CS.y, CS, CS.width, CS.height, "GAME_CS")
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "GAMES")
         self.add_to_ButtonList(bttnA)
         self.add_to_ButtonList(bttnB)
         self.add_to_ButtonList(bttnC)
-        self.add_to_ButtonList(bttnD)
         self.add_to_ButtonList(bttnQuit)
+        TS = pygame.image.load(file('images/gamescreen.jpg.png'))
+        screen.blit(TS, (0, 0))
        #self.Title_Text(screen, "Main Menu")
        #self.Button_Text(screen, "Games", bttnA)
        #self.Button_Text(screen, "How To Play", bttnB)
@@ -113,10 +112,12 @@ class Grammar_Game:
     def Main_Menu(self, screen):
         self.flush_ButtonList()
         screen.fill((255, 255, 255))  # 255 for white
-        Game = pygame.draw.rect(screen, (0, 255, 0), (000, 300, 1400, 100))
-        HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (000, 400, 1400, 100))
-        TrophyCase = pygame.draw.rect(screen, (255, 255, 0), (000, 500, 1400, 100))
-        Quit = pygame.draw.rect(screen, (0, 0, 255), (000, 600, 1400, 100))
+        TS = pygame.image.load(file('images/titlescreen.jpg.png'))
+        screen.blit(TS, (0, 0))
+        Game = pygame.draw.rect(screen, (0, 255, 0), (565, 290, 463, 111))
+        HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (565, 416, 463, 111))
+        TrophyCase = pygame.draw.rect(screen, (255, 255, 0), (565, 542, 463, 111))
+        Quit = pygame.draw.rect(screen, (0, 0, 255), (565, 668, 463, 111))
         NinjaBear = pygame.draw.rect(screen, (255, 255, 255), (1300, 000, 100, 100))
         bttnA = MenuButton(Game.x, Game.y, Game, Game.width, Game.height, "GAMES")
         bttnB = MenuButton(HowToPlay.x, HowToPlay.y, HowToPlay, HowToPlay.width, HowToPlay.height, "HTP")
@@ -160,7 +161,7 @@ class Grammar_Game:
         quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
-        NB = pygame.image.load(file('Ninja-bear.png'))
+        NB = pygame.image.load(file('images/Ninja-bear.png'))
         center_x = (1400-159)/2
         center_y = (400-228)/2
         screen.blit(NB, (center_x, center_y + 300))
@@ -215,11 +216,11 @@ class Grammar_Game:
         if self.window == "GAME_RP":
             self.cur_game = 'games/RP'
             self.Game_Screen(screen)
-        if self.window == "GAME_SP":
-            self.cur_game = 'games/SP'
+        if self.window == "GAME_PP":
+            self.cur_game = 'games/PP'
             self.Game_Screen(screen)
-        if self.window == "GAME_WW":
-            self.cur_game = 'games/WW'
+        if self.window == "GAME_CS":
+            self.cur_game = 'games/CS'
             self.Game_Screen(screen)
         if self.window == "GAME_GF":
             self.cur_game = 'games/GF'
