@@ -1,5 +1,5 @@
-Question5
-Answer1
-Answer2
-Answer3
-Answer4
+Which is a complete sentence?
+Ninja Bear does not even need his sword.
+Ninja Bear does not even his sword.
+A sword does not even Ninja Bear.
+Ninja Bear's sword of +5 stealth.

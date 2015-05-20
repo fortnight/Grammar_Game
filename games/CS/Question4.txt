@@ -1,5 +1,5 @@
-Question4
-Answer1
-Answer2
-Answer3
-Answer4
+Which is a complete sentence?
+Ninja Bear can not be seen when he is sneaking.
+When sneaking, can not be seen.
+Ninja Bear can not when he is sneaking.
+Sneaky sneaky no see Ninja Bear.
