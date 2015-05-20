@@ -160,6 +160,7 @@ class Grammar_Game:
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
         self.Title_Text(screen, "Credits")
+        self.Text_Text(screen, "Graphics by Kaffys    Code by Fortnight")
         self.Button_Text(screen, "Quit", bttnQuit)
 
     def Ninja_Bear(self, screen):
@@ -181,6 +182,13 @@ class Grammar_Game:
         Title = Font.render(text, False, (0, 0, 0))
         center_x = (self.space_width - Title.get_rect().width)/2
         center_y = (self.space_height - Title.get_rect().height)/2
+        screen.blit(Title, (center_x, center_y))
+
+    def Text_Text(self, screen, text):
+        Font = pygame.font.SysFont("monospace", 40)
+        Title = Font.render(text, False, (0, 0, 0))
+        center_x = (self.space_width - Title.get_rect().width)/2
+        center_y = (900 - Title.get_rect().height)/2
         screen.blit(Title, (center_x, center_y))
 
     def Button_Text(self, screen, text, button):
