@@ -21,7 +21,7 @@ class Grammar_Game:
         self.cur_game = None
         self.cur_question = 'Question1'
         self.space_height = 300
-        self.space_width = 1400
+        self.space_width = 1200
         self.paused = True
         self.direction = 1
         self.bttnTestRect = pygame.Rect(self.x, self.y, 200, 100)
@@ -76,7 +76,7 @@ class Grammar_Game:
         bttnB = GameButton(answer_B.x, answer_B.y, answer_B, answer_B.width, answer_B.height, False)
         bttnC = GameButton(answer_C.x, answer_C.y, answer_C, answer_C.width, answer_C.height, False)
         bttnD = GameButton(answer_D.x, answer_D.y, answer_D, answer_D.width, answer_D.height, False)
-        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "GAMES")
         self.add_to_ButtonList(bttnA)
         self.add_to_ButtonList(bttnB)
         self.add_to_ButtonList(bttnC)
@@ -96,7 +96,7 @@ class Grammar_Game:
         bttnA = MenuButton(RP.x, RP.y, RP, RP.width, RP.height, "GAME_RP")
         bttnB = MenuButton(PP.x, PP.y, PP, PP.width, PP.height, "GAME_PP")
         bttnC = MenuButton(CS.x, CS.y, CS, CS.width, CS.height, "GAME_CS")
-        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "GAMES")
+        bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnA)
         self.add_to_ButtonList(bttnB)
         self.add_to_ButtonList(bttnC)
@@ -105,23 +105,21 @@ class Grammar_Game:
         screen.blit(TS, (0, 0))
        #self.Title_Text(screen, "Main Menu")
        #self.Button_Text(screen, "Games", bttnA)
-       #self.Button_Text(screen, "How To Play", bttnB)
-       #self.Button_Text(screen, "Trophy Case", bttnC)
+       #self.Button_Text(screen, "Trophy Case", bttnB)
+       #self.Button_Text(screen, "Credits", bttnC)
        #self.Button_Text(screen, "Exit", bttnD)
 
     def Main_Menu(self, screen):
         self.flush_ButtonList()
         screen.fill((255, 255, 255))  # 255 for white
-        TS = pygame.image.load(file('images/titlescreen.jpg.png'))
-        screen.blit(TS, (0, 0))
         Game = pygame.draw.rect(screen, (0, 255, 0), (565, 290, 463, 111))
-        HowToPlay = pygame.draw.rect(screen, (255, 0, 0), (565, 416, 463, 111))
-        TrophyCase = pygame.draw.rect(screen, (255, 255, 0), (565, 542, 463, 111))
+        TrophyCase = pygame.draw.rect(screen, (255, 0, 0), (565, 416, 463, 111))
+        Credits = pygame.draw.rect(screen, (255, 255, 0), (565, 542, 463, 111))
         Quit = pygame.draw.rect(screen, (0, 0, 255), (565, 668, 463, 111))
         NinjaBear = pygame.draw.rect(screen, (255, 255, 255), (1300, 000, 100, 100))
         bttnA = MenuButton(Game.x, Game.y, Game, Game.width, Game.height, "GAMES")
-        bttnB = MenuButton(HowToPlay.x, HowToPlay.y, HowToPlay, HowToPlay.width, HowToPlay.height, "HTP")
-        bttnC = MenuButton(TrophyCase.x, TrophyCase.y, TrophyCase, TrophyCase.width, TrophyCase.height, "TC")
+        bttnB = MenuButton(TrophyCase.x, TrophyCase.y, TrophyCase, TrophyCase.width, TrophyCase.height, "TC")
+        bttnC = MenuButton(Credits.x, Credits.y, Credits, Credits.width, Credits.height, "CR")
         bttnD = MenuButton(Quit.x, Quit.y, Quit, Quit.width, Quit.height, "RECTIFY")
         bttnE = MenuButton(NinjaBear.x, NinjaBear.y, NinjaBear, NinjaBear.width, NinjaBear.height, "NB")
         self.add_to_ButtonList(bttnA)
@@ -131,28 +129,37 @@ class Grammar_Game:
         self.add_to_ButtonList(bttnE)
         self.Title_Text(screen, "Main Menu")
         self.Button_Text(screen, "Games", bttnA)
-        self.Button_Text(screen, "How To Play", bttnB)
-        self.Button_Text(screen, "Trophy Case", bttnC)
+        self.Button_Text(screen, "Trophy Case", bttnB)
+        self.Button_Text(screen, "Credits", bttnC)
         self.Button_Text(screen, "Exit", bttnD)
+        TS = pygame.image.load(file('images/titlescreen.jpg.png'))
+        screen.blit(TS, (0, 0))
 
     def Trophy_Case(self, screen):
         self.flush_ButtonList()
-        screen.fill((255, 255, 255)) # 255 for white
         quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
         self.Title_Text(screen, "Trophy Case")
         self.Button_Text(screen, "Quit", bttnQuit)
         for trophy in self.trophyList:
-            print(trophy)
+            if trophy == 'games/RP':
+                Banana = pygame.image.load(file('images/banana.png'))
+                screen.blit(Banana, (100, 300))
+            if trophy == 'games/PP':
+                Watermelon = pygame.image.load(file('images/watermelon.png'))
+                screen.blit(Watermelon, (300, 500))
+            if trophy == 'games/CS':
+                Strawberry = pygame.image.load(file('images/Strawberry.png'))
+                screen.blit(Strawberry, (700, 300))
 
-    def How_To_Play(self, screen):
+    def Credits(self, screen):
         self.flush_ButtonList()
         screen.fill((255, 255, 255)) # 255 for white
         quit_rect = pygame.draw.rect(screen, (0, 0, 255), (000, 000, 100, 100))
         bttnQuit = MenuButton(quit_rect.x, quit_rect.y, quit_rect, quit_rect.width, quit_rect.height, "MainMenu")
         self.add_to_ButtonList(bttnQuit)
-        self.Title_Text(screen, "How To Play")
+        self.Title_Text(screen, "Credits")
         self.Button_Text(screen, "Quit", bttnQuit)
 
     def Ninja_Bear(self, screen):
@@ -202,13 +209,15 @@ class Grammar_Game:
         pass
     
     def Set_Screen(self, screen):
+        screen.fill((255, 255, 255)) # 255 for white
         if self.window == "MainMenu":
             self.cur_question = 'Question1'
             self.Main_Menu(screen)
         if self.window == "GAMES":
+            self.cur_question = 'Question1'
             self.Game_Menu(screen)
-        if self.window == "HTP":
-            self.How_To_Play(screen)
+        if self.window == "CR":
+            self.Credits(screen)
         if self.window == "TC":
             self.Trophy_Case(screen)
         if self.window == "NB":
@@ -221,9 +230,6 @@ class Grammar_Game:
             self.Game_Screen(screen)
         if self.window == "GAME_CS":
             self.cur_game = 'games/CS'
-            self.Game_Screen(screen)
-        if self.window == "GAME_GF":
-            self.cur_game = 'games/GF'
             self.Game_Screen(screen)
         if self.window == "RECTIFY":
             sys.exit()
